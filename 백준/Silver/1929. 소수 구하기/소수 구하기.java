@@ -5,8 +5,11 @@ class Main {
     int M = sc.nextInt();
     int N = sc.nextInt();
 
+    boolean[] prime = new boolean[N + 1];
+    prime(prime, N);
+
     for(int i = M; i <= N; i++){
-      if(isPrime(i)){
+      if(!prime[i]){
         System.out.println(i);
       }
     }
@@ -14,16 +17,15 @@ class Main {
     sc.close();
   }
 
-  private static boolean isPrime(int number){
-    if(number == 0 || number == 1){
-      return false;
-    }
-    
-    for(int i = 2; i <= Math.sqrt(number); i++){
-      if(number % i == 0){
-        return false;
+  private static void prime(boolean[] prime, int N){
+    prime[0] = prime[1] = true;
+    for(int i = 2; i <= Math.sqrt(N); i++){
+      if(prime[i]){
+        continue;
+      }
+      for(int j = i + i; j <= N; j += i){
+        prime[j] = true;
       }
     }
-    return true;
   }
 }
