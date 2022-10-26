@@ -1,17 +1,24 @@
 import java.util.*;
 class Main {
+    static long[] dp;
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
         int N = sc.nextInt();
-        long[] dp = new long[N + 1];
-        dp[1] = 1;
-
-        for(int i = 2; i <= N; i++){
-            dp[i] = dp[i - 2] + dp[i - 1];
-        }
-
-        System.out.println(dp[N]);        
+        dp = new long[N + 1];
+        System.out.println(calculate(N));
         sc.close();
+    }
+    static long calculate(int N){
+        if(N == 0){
+            return 0;
+        }
+        if(N == 1){
+            return 1;
+        }
+        if(dp[N] > 0){
+            return dp[N];
+        }
+        dp[N] = calculate(N - 1) + calculate(N - 2);
+        return dp[N];
     }
 }
