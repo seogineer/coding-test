@@ -1,33 +1,28 @@
 import java.util.*;
-public class Main {
-  public static void main(String[] args) {
-    Scanner sc = new Scanner(System.in);
-    int tc = sc.nextInt();
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        StringBuilder sb = new StringBuilder();
+        Stack<Integer> stack = new Stack<>();
+        int start = 0;
+        for(int i = 1; i <= n; i++){
+            int input = sc.nextInt();
+            if(start < input){
+                for(int j = start + 1; j <= input; j++){
+                    stack.push(j);
+                    sb.append('+').append('\n');
+                }
+                start = input;
+            } else if(stack.peek() != input){
+                System.out.println("NO");
+                return;
+            }
 
-    StringBuilder sb = new StringBuilder();
-    Stack<Integer> stack = new Stack<>();
-
-    int n = 0;
-    for(int i = 0; i < tc; i++){
-      int input = sc.nextInt();
-
-      if(n < input){
-        for(int j = n + 1; j <= input; j++){
-          stack.push(j);
-          sb.append("+").append("\n");
+            stack.pop();
+            sb.append('-').append('\n');
         }
-        n = input;
-      } else if(input != stack.peek()){
-        System.out.println("NO");
-        return;
-      }
-
-      stack.pop();
-      sb.append("-").append("\n");
+        System.out.println(sb.toString());
+        sc.close();
     }
-
-    System.out.println(sb);
-
-    return;
-  }
 }
