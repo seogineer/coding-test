@@ -1,50 +1,50 @@
 import java.util.*;
 import java.io.*;
 class Main {
-  public static void main(String[] args) throws IOException {
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-    Stack<String> left = new Stack<>();
-    Stack<String> right = new Stack<>();
+        Stack<Character> left = new Stack<>();
+        Stack<Character> right = new Stack<>();
+        
+        String input = br.readLine();
+        for(int i = 0; i < input.length(); i++){
+            left.push(input.charAt(i));
+        }
+        
+        int N = Integer.parseInt(br.readLine());
+        for(int t = 0; t < N; t++){
+            String command = br.readLine();
 
-    String input = br.readLine();
-    for (int i = 0; i < input.length(); i++) {
-      left.push(input.charAt(i) + "");
-    }
-
-    int tc = Integer.parseInt(br.readLine());
-    for (int i = 0; i < tc; i++) {
-      String[] command = br.readLine().split(" ");
-
-      if (command.length > 1) {
-        left.push(command[1]);
-      } else {
-        if (command[0].equals("L")) {
-          if (!left.isEmpty()) {
+            if('L' == command.charAt(0)){
+                if(!left.isEmpty()){
+                    right.push(left.pop());
+                }
+            }
+            if('D' == command.charAt(0)){
+                if(!right.isEmpty()){
+                    left.push(right.pop());
+                }
+            }
+            if('B' == command.charAt(0)){
+                if(!left.isEmpty()) {
+                    left.pop();
+                }
+            }
+            if('P' == command.charAt(0)){
+                left.push(command.charAt(2));
+            }
+        }
+        
+        while(!left.isEmpty()){
             right.push(left.pop());
-          }
         }
-        if (command[0].equals("D")) {
-          if (!right.isEmpty()) {
-            left.push(right.pop());
-          }
+        StringBuilder sb = new StringBuilder();
+        while(!right.isEmpty()){
+            sb.append(right.pop());
         }
-        if (command[0].equals("B")) {
-          if (!left.isEmpty()) {
-            left.pop();
-          }
-        }
-      }
+        System.out.println(sb.toString());
+        
+        br.close();
     }
-
-    while(!left.isEmpty())
-			right.push(left.pop());
-		
-    while(!right.isEmpty())
-			bw.write(right.pop());
-
-    bw.flush();
-    bw.close();
-  }
 }
