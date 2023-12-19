@@ -2,43 +2,44 @@ import java.util.*;
 class Main {
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
-    String input = sc.nextLine();
-
+    String S = sc.nextLine();
+    
     StringBuilder sb = new StringBuilder();
-    Stack<String> stack = new Stack<>();
-    boolean flag = true;
-    for(int i = 0; i < input.length(); i++){
-      if(input.charAt(i) == ' '){
+    Stack<Character> stack = new Stack<>();
+
+    boolean isTag = false;
+    for(int i = 0; i < S.length(); i++){
+      if(S.charAt(i) == '<'){
+        isTag = true;
         while(!stack.isEmpty()){
           sb.append(stack.pop());
         }
-        sb.append(" ");
+      }
+      if(S.charAt(i) == '>'){
+        isTag = false;
+        sb.append(S.charAt(i));
         continue;
       }
-      if(input.charAt(i) == '<'){
+      if(S.charAt(i) == ' '){
         while(!stack.isEmpty()){
           sb.append(stack.pop());
         }
-        flag = false;
-        sb.append("<");
+        sb.append(S.charAt(i));
         continue;
       }
-      if(input.charAt(i) == '>'){
-        flag = true;
-        sb.append(">");
-        continue;
-      }
-      if(flag){
-        stack.push(input.charAt(i) + "");
+
+      if(isTag){
+        sb.append(S.charAt(i));
       } else {
-        sb.append(input.charAt(i) + "");
+        stack.push(S.charAt(i));
       }
     }
-    
+
     while(!stack.isEmpty()){
       sb.append(stack.pop());
     }
 
-    System.out.println(sb);
+    System.out.println(sb.toString());
+    sc.close();
   }
 }
