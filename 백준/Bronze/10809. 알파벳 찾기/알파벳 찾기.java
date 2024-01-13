@@ -1,24 +1,19 @@
 import java.util.*;
 class Main {
   public static void main(String[] args) {
-    Map<Character, Integer> alphabetLocation = new HashMap<>();
-    for(int i = 97; i < 123; i++){
-      alphabetLocation.put((char) i, -1);
-    }
-
     Scanner sc = new Scanner(System.in);
-    String input = sc.nextLine();
-    for(int i = 0; i < input.length(); i++){
-      if(alphabetLocation.get(input.charAt(i)) == -1){
-        alphabetLocation.put(input.charAt(i), i);
+
+    String S = sc.next();
+    int[] count = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+    for(int i = 0; i < S.length(); i++){
+      if(count[S.charAt(i) - 97] == -1){
+        count[S.charAt(i) - 97] = i;
       }
     }
 
-    StringBuilder sb = new StringBuilder();
-    for(int i = 97; i < 123; i++){
-      sb.append(alphabetLocation.get((char) i)).append(" ");
+    for(int i = 0; i < count.length; i++){
+      System.out.print(count[i] + " ");
     }
-
-    System.out.println(sb);
+    sc.close();
   }
 }
