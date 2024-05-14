@@ -1,27 +1,19 @@
 import java.util.*;
-class Main {
-    private static int methodCount;
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int tc = sc.nextInt();
-        for(int t = 0; t < tc; t++){
-            int n = sc.nextInt();
-            methodCount = 0;
-            getSumMethodCount(n, 0);
-            System.out.println(methodCount);
-        }
-        sc.close();
+public class Main {
+  public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    int T = sc.nextInt();
+    for(int i = 0; i < T; i++) {
+      int n = sc.nextInt();
+      int[] dp = new int[12];
+      dp[1] = 1;
+      dp[2] = 2;
+      dp[3] = 4;
+      for(int j = 4; j <= n; j++){
+        dp[j] = dp[j - 1] + dp[j - 2] + dp[j - 3];
+      }
+      System.out.println(dp[n]);
     }
-
-    private static void getSumMethodCount(int n, int sum) {
-        if(n <= sum){
-            if(n == sum){
-                methodCount++;    
-            }
-            return;
-        }
-        getSumMethodCount(n, sum + 1);
-        getSumMethodCount(n, sum + 2);
-        getSumMethodCount(n, sum + 3);
-    }
+    sc.close();
+  }
 }
