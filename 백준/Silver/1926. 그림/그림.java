@@ -1,71 +1,63 @@
 import java.util.*;
 public class Main {
-  static int n;
-  static int m;
-  static int[] dx = {1, -1, 0, 0};
-  static int[] dy = {0, 0, 1, -1};
-  static int[][] map;
-  static boolean[][] visit;
-  static int count = 0;
-  static int maxArea = 0;
-  static Queue<Coordinate> queue = new LinkedList<>();
-  
-  public static void main(String[] args) {
-    Scanner sc = new Scanner(System.in);
-    n = sc.nextInt();
-    m = sc.nextInt();
-    map = new int[n][m];
-    visit = new boolean[n][m];
+    static int[] dy = {0, 1, 0, -1};
+    static int[] dx = {1, 0, -1, 0};
+    static int count = 0;
+    static int max = 0;
 
-    for (int i = 0; i < n; i++) {
-      for (int j = 0; j < m; j++) {
-        map[i][j] = sc.nextInt();
-      }
-    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int m = sc.nextInt();
 
-    for (int i = 0; i < n; i++) {
-      for (int j = 0; j < m; j++) {
-        if (map[i][j] == 1 && !visit[i][j]) {
-          count++;
-          visit[i][j] = true;
-          bfs(j, i);
+        int[][] map = new int[n][m];
+        boolean[][] visited = new boolean[n][m];
+        for (int j = 0; j < n; j++) {
+            for (int i = 0; i < m; i++) {
+                map[j][i] = sc.nextInt();
+            }
         }
-      }
-    }
 
-    System.out.println(count);
-    System.out.println(maxArea);
-    sc.close();
-  }
+        Queue<Coordinate> q = new LinkedList<>();
 
-  static void bfs(int x, int y) {
-    int area = 1;
-    queue.add(new Coordinate(x, y));
-    while(!queue.isEmpty()) {
-      Coordinate coordinate = queue.poll();
-      int coordinateX = coordinate.x;
-      int coordinateY = coordinate.y;
-      for(int i = 0; i < 4; i++) {
-        int nx = coordinateX + dx[i];
-        int ny = coordinateY + dy[i];
-        if (nx >= 0 && nx < m && ny >= 0 && ny < n) {
-          if (map[ny][nx] == 1 && !visit[ny][nx]) {
-            area++;
-            visit[ny][nx] = true;
-            queue.add(new Coordinate(nx, ny));
-          }
+        for (int j = 0; j < n; j++) {
+            for (int i = 0; i < m; i++) {
+                if (map[j][i] == 1 && !visited[j][i]) {
+                    count++;
+                    visited[j][i] = true;
+                    int area = 1;
+                    q.add(new Coordinate(j, i));
+                    while (!q.isEmpty()) {
+                        Coordinate co = q.poll();
+                        for (int k = 0; k < 4; k++) {
+                            int ny = co.y + dy[k];
+                            int nx = co.x + dx[k];
+                            if (ny >= 0 && ny < n && nx >= 0 && nx < m) {
+                                if(map[ny][nx] == 1 && !visited[ny][nx]) {
+                                    area++;
+                                    visited[ny][nx] = true;
+                                    q.add(new Coordinate(ny, nx));
+                                }
+                            }
+                        }
+                    }
+                    max = Math.max(area, max);
+                }
+            }
         }
-      }
-    }
-    maxArea = Math.max(maxArea, area);
-  }
-}
 
-class Coordinate {
-  int x;
-  int y;
-  protected Coordinate (int x, int y) {
-    this.x = x;
-    this.y = y;
-  }
+        System.out.println(count);
+        System.out.println(max);
+        sc.close();
+    }
+
+    static class Coordinate {
+        int x;
+        int y;
+
+        Coordinate (int y, int x) {
+            this.y = y;
+            this.x = x;
+        }
+    }
 }
