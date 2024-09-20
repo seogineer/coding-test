@@ -10,7 +10,7 @@ public class Main {
         }
 
         @Override
-        public int compareTo(Edge other) {
+        public int compareTo(Edge other){
             return Integer.compare(this.weight, other.weight);
         }
     }
@@ -22,6 +22,7 @@ public class Main {
         int E = sc.nextInt();
 
         List<Edge>[] adj = new ArrayList[V + 1];
+
         for (int i = 1; i <= V; i++) {
             adj[i] = new ArrayList<>();
         }
@@ -39,6 +40,7 @@ public class Main {
         pq.add(new Edge(1, 0));
 
         int mstWeight = 0;
+
         while (!pq.isEmpty()) {
             Edge current = pq.poll();
 
@@ -46,9 +48,9 @@ public class Main {
                 continue;
             }
 
-            visited[current.to] = true;
             mstWeight += current.weight;
-            
+            visited[current.to] = true;
+
             for (Edge edge : adj[current.to]) {
                 if (!visited[edge.to]) {
                     pq.add(edge);
