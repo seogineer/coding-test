@@ -1,19 +1,32 @@
 import java.util.*;
-public class Main {
-  public static void main(String[] args) {
-    Scanner sc = new Scanner(System.in);
-    int T = sc.nextInt();
-    for(int i = 0; i < T; i++) {
-      int n = sc.nextInt();
-      int[] dp = new int[12];
-      dp[1] = 1;
-      dp[2] = 2;
-      dp[3] = 4;
-      for(int j = 4; j <= n; j++){
-        dp[j] = dp[j - 1] + dp[j - 2] + dp[j - 3];
-      }
-      System.out.println(dp[n]);
+class Main {
+    static int count;
+    
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        int T = sc.nextInt();
+        
+        for (int t = 0; t < T; t++) {
+            int n = sc.nextInt();
+            recur(n, 0);
+            System.out.println(count);
+            count = 0;
+        }
+        
+        sc.close();
     }
-    sc.close();
-  }
+    
+    private static void recur(int n, int value) {
+        if (value >= n) {
+            if (value == n) {
+                count++;
+            }
+            return;
+        }
+        
+        recur(n, value + 1);
+        recur(n, value + 2);
+        recur(n, value + 3);
+    }
 }
