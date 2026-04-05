@@ -1,25 +1,24 @@
-import java.util.*;
+import java.io.*;
+
 class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int tc = Integer.parseInt(br.readLine());
         
-        int T = sc.nextInt();
-        sc.nextLine();
-        for(int t = 0; t < T; t++){
-            String[] input = sc.nextLine().split(" ");
-            for(int repeat = 0; repeat < input.length; repeat++){
-                StringBuilder sb = new StringBuilder();
-                Stack<String> stack = new Stack<>();
-                stack.push(" ");
-                for(int i = 0; i < input[repeat].length(); i++){
-                    stack.push(input[repeat].charAt(i) + "");
+        for (int t = 0; t < tc; t++) {
+            String input = br.readLine();
+            String[] pieces = input.split(" ");
+            
+            StringBuilder sb = new StringBuilder();
+            for (int j = 0; j < pieces.length; j++) {
+                for (int i = pieces[j].length() - 1; i >= 0; i--) {
+                    sb.append(pieces[j].charAt(i));
                 }
-                while(!stack.isEmpty()){
-                    sb.append(stack.pop());
-                }
-                System.out.print(sb.toString());
+                sb.append(" ");
             }
+            System.out.println(sb.toString());
         }
-        sc.close();
+        
+        br.close();
     }
 }
