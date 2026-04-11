@@ -1,35 +1,39 @@
+import java.io.*;
 import java.util.*;
+
 class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        Queue<Integer> q = new LinkedList<>();
-        int N = sc.nextInt();
-        int K = sc.nextInt();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] input = br.readLine().split(" ");
         
-        for(int n = 1; n <= N; n++){
+        int N = Integer.parseInt(input[0]);
+        int K = Integer.parseInt(input[1]);
+        
+        Queue<Integer> q = new LinkedList<>();
+        
+        for (int n = 1; n <= N; n++) {
             q.add(n);
         }
-
-        List<Integer> list = new ArrayList<>();
-        while(!q.isEmpty()){
-            for(int i = 1; i < K; i++){
-                q.add(q.poll());    
-            }
-            list.add(q.poll());
-        }
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("<");
-        for(int i = 0; i < list.size(); i++){
-            if(i == list.size() - 1){
-                sb.append(list.get(i));
-                continue;
-            }
-            sb.append(list.get(i)).append(", ");
-        }
-        sb.append(">");
         
-        System.out.println(sb.toString());
-        sc.close();
+        StringBuilder sb = new StringBuilder();
+        
+        int k = 1;
+        while (!q.isEmpty()) {
+            int el = q.poll();
+            
+            if (k % K == 0) {
+                if (q.size() > 0) {
+                    sb.append(el).append(", ");
+                } else {
+                    sb.append(el);
+                }
+            } else {
+                q.offer(el);
+            }
+            k++;
+        }
+        
+        System.out.println("<" + sb + ">");
+        br.close();
     }
 }
