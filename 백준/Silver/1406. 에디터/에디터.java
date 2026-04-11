@@ -1,49 +1,47 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
+
 class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
+        
         Stack<Character> left = new Stack<>();
         Stack<Character> right = new Stack<>();
         
-        String input = br.readLine();
-        for(int i = 0; i < input.length(); i++){
-            left.push(input.charAt(i));
+        String str = br.readLine();
+        for (int i = 0; i < str.length(); i++) {
+            left.push(str.charAt(i));
         }
         
-        int N = Integer.parseInt(br.readLine());
-        for(int t = 0; t < N; t++){
-            String command = br.readLine();
-
-            if('L' == command.charAt(0)){
-                if(!left.isEmpty()){
-                    right.push(left.pop());
+        int tc = Integer.parseInt(br.readLine());
+        for (int t = 0; t < tc; t++) {
+            String input = br.readLine();
+            
+            if (input.charAt(0) == 'L') {
+                if (!left.isEmpty()) {
+                    right.push(left.pop());    
                 }
-            }
-            if('D' == command.charAt(0)){
-                if(!right.isEmpty()){
-                    left.push(right.pop());
+            } else if (input.charAt(0) == 'D') {
+                if (!right.isEmpty()) {
+                    left.push(right.pop());    
                 }
-            }
-            if('B' == command.charAt(0)){
-                if(!left.isEmpty()) {
+            } else if (input.charAt(0) == 'B') {
+                if (!left.isEmpty()) {
                     left.pop();
                 }
-            }
-            if('P' == command.charAt(0)){
-                left.push(command.charAt(2));
+            } else if (input.charAt(0) == 'P') {
+                left.push(input.charAt(2));
             }
         }
         
-        while(!left.isEmpty()){
-            right.push(left.pop());
+        while (!left.isEmpty()) {
+            right.push(left.pop());    
         }
         StringBuilder sb = new StringBuilder();
-        while(!right.isEmpty()){
+        while (!right.isEmpty()) {
             sb.append(right.pop());
         }
-        System.out.println(sb.toString());
+        System.out.println(sb);
         
         br.close();
     }
