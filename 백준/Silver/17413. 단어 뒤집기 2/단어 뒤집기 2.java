@@ -1,45 +1,48 @@
+import java.io.*;
 import java.util.*;
+
 class Main {
-  public static void main(String[] args) {
-    Scanner sc = new Scanner(System.in);
-    String S = sc.nextLine();
-    
-    StringBuilder sb = new StringBuilder();
-    Stack<Character> stack = new Stack<>();
-
-    boolean isTag = false;
-    for(int i = 0; i < S.length(); i++){
-      if(S.charAt(i) == '<'){
-        isTag = true;
-        while(!stack.isEmpty()){
-          sb.append(stack.pop());
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Stack<Character> s = new Stack<>();
+        StringBuilder sb = new StringBuilder();
+        
+        String input = br.readLine();
+        
+        boolean isTag = false;
+        for (int i = 0; i < input.length(); i++) {
+            char c = input.charAt(i);
+            
+            if (c == '<') {
+                while (!s.isEmpty()) {
+                    sb.append(s.pop());
+                }
+                isTag = true;
+            }
+            
+            if (!isTag && c == ' ') {
+                while (!s.isEmpty()) {
+                    sb.append(s.pop());
+                }
+                sb.append(c);
+                continue;
+            }
+            
+            if (isTag) {
+                sb.append(c);
+            } else {
+                s.push(c);
+            }
+            
+            if (c == '>') {
+                isTag = false;
+            }
         }
-      }
-      if(S.charAt(i) == '>'){
-        isTag = false;
-        sb.append(S.charAt(i));
-        continue;
-      }
-      if(S.charAt(i) == ' '){
-        while(!stack.isEmpty()){
-          sb.append(stack.pop());
+        
+        while (!s.isEmpty()) {
+            sb.append(s.pop());
         }
-        sb.append(S.charAt(i));
-        continue;
-      }
-
-      if(isTag){
-        sb.append(S.charAt(i));
-      } else {
-        stack.push(S.charAt(i));
-      }
+        System.out.println(sb);
+        br.close();
     }
-
-    while(!stack.isEmpty()){
-      sb.append(stack.pop());
-    }
-
-    System.out.println(sb.toString());
-    sc.close();
-  }
 }
