@@ -1,65 +1,68 @@
 import java.util.*;
+import java.io.*;
+
 class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
         
-        int[] dequeue = new int[10001];
+        int[] deque = new int[10001];
         int front = 5000;
         int back = 5000;
         int size = 0;
-
-        StringBuilder sb = new StringBuilder();
-        int N = sc.nextInt();
-        for(int n = 0; n < N; n++){
-            String command = sc.next();
-            if("push_front".equals(command)) {
-                dequeue[front] = Integer.parseInt(sc.next());
+        
+        int tc = Integer.parseInt(br.readLine());
+        for (int t = 0; t < tc; t++) {
+            String[] command = br.readLine().split(" ");
+            
+            if ("push_front".equals(command[0])) {
+                deque[front] = Integer.parseInt(command[1]);
                 front++;
                 size++;
-            } else if("push_back".equals(command)) {
+            } else if ("push_back".equals(command[0])) {
                 back--;
                 size++;
-                dequeue[back] = Integer.parseInt(sc.next());
-            } else if("pop_front".equals(command)) {
-                if(size == 0){
-                    sb.append(-1).append('\n');
+                deque[back] = Integer.parseInt(command[1]);
+            } else if ("pop_front".equals(command[0])) {
+                if (size == 0) {
+                    sb.append(-1).append("\n");
                     continue;
                 }
-                sb.append(dequeue[front - 1]).append('\n');
                 front--;
                 size--;
-            } else if("pop_back".equals(command)) {
-                if(size == 0){
-                    sb.append(-1).append('\n');
+                sb.append(deque[front]).append("\n");
+            } else if ("pop_back".equals(command[0])) {
+                if (size == 0) {
+                    sb.append(-1).append("\n");
                     continue;
                 }
-                sb.append(dequeue[back]).append('\n');
+                sb.append(deque[back]).append("\n");
                 back++;
                 size--;
-            } else if("size".equals(command)) {
-                sb.append(size).append('\n');
-            } else if("empty".equals(command)) {
-                if(size == 0){
-                    sb.append(1).append('\n');
+            } else if ("size".equals(command[0])) {
+                sb.append(size).append("\n");
+            } else if ("empty".equals(command[0])) {
+                if (size == 0) {
+                    sb.append(1).append("\n");
                 } else {
-                    sb.append(0).append('\n');
+                    sb.append(0).append("\n");
                 }
-            } else if("front".equals(command)) {
-                if(size == 0){
-                    sb.append(-1).append('\n');
-                    continue;
+            } else if ("front".equals(command[0])) {
+                if (size == 0) {
+                    sb.append(-1).append("\n");
+                } else {
+                    sb.append(deque[front - 1]).append("\n");
                 }
-                sb.append(dequeue[front - 1]).append('\n');
-            } else if("back".equals(command)) {
-                if(size == 0){
-                    sb.append(-1).append('\n');
-                    continue;
+            } else if ("back".equals(command[0])) {
+                if (size == 0) {
+                    sb.append(-1).append("\n");
+                } else {
+                    sb.append(deque[back]).append("\n");
                 }
-                sb.append(dequeue[back]).append('\n');
             }
         }
-
-        System.out.println(sb.toString());
-        sc.close();
+        
+        System.out.println(sb);
+        br.close();
     }
 }
