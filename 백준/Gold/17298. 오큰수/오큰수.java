@@ -1,32 +1,37 @@
+import java.io.*;
 import java.util.*;
+
 class Main {
-  public static void main(String[] args) {
-    Scanner sc = new Scanner(System.in);
-    
-    int N = sc.nextInt();
-    int[] sequence = new int[N];
-    for(int i = 0; i < sequence.length; i++){
-      sequence[i] = sc.nextInt();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Stack<Integer> stack = new Stack<>();
+        
+        int N = Integer.parseInt(br.readLine());
+        int[] seq = new int[N];
+        
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+        for (int n = 0; n < N; n++) {
+            seq[n] = Integer.parseInt(st.nextToken());
+        }
+        
+        for (int n = 0; n < N; n++) {
+            while (!stack.isEmpty() && seq[stack.peek()] < seq[n]) {
+                seq[stack.peek()] = seq[n];
+                stack.pop();
+            }
+            stack.push(n);
+        }
+        
+        while (!stack.isEmpty()) {
+            seq[stack.pop()] = -1;
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < seq.length; i++) {
+            sb.append(seq[i]).append(" ");
+        }
+        System.out.println(sb);
+        
+        br.close();
     }
-
-    Stack<Integer> stack = new Stack<>();
-    for(int i = 0; i < sequence.length; i++){
-      while(!stack.isEmpty() && sequence[stack.peek()] < sequence[i]){
-        sequence[stack.pop()] = sequence[i];
-      }
-      stack.push(i);
-    }
-
-    while(!stack.isEmpty()){
-      sequence[stack.pop()] = -1;
-    }
-
-    StringBuilder sb = new StringBuilder();
-    for(int i = 0; i < sequence.length; i++){
-      sb.append(sequence[i]).append(' ');
-    }
-    System.out.println(sb.toString());
-    
-    sc.close();
-  }
 }
